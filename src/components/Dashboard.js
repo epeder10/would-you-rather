@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Tweet from './Tweet'
+import Question from './Question'
 
 class Dashboard extends Component {
   render() {
@@ -8,9 +8,9 @@ class Dashboard extends Component {
       <div>
         <h3 className='center'>Your Timeline</h3>
         <ul className='dashboard-list'>
-          {this.props.tweetIds.map((id) => (
+          {this.props.questionIds.map((id) => (
             <li key={id}>
-              <Tweet id={id}/>
+              <Question id={id}/>
             </li>
           ))}
         </ul>
@@ -19,10 +19,10 @@ class Dashboard extends Component {
   }
 }
 
-function mapStateToProps ({ tweets }) {
+function mapStateToProps ({ questions }) {
   return {
-    tweetIds: Object.keys(tweets)
-      .sort((a,b) => tweets[b].timestamp - tweets[a].timestamp)
+    questionIds: Object.keys(questions)
+      .sort((a,b) => questions[b].timestamp - questions[a].timestamp)
   }
 }
 

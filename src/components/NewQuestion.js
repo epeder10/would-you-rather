@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { handleAddTweet } from '../actions/tweets'
+//import { handleAddTweet } from '../actions/tweets'
 import { Redirect } from 'react-router-dom'
 
 class NewQuestion extends Component {
