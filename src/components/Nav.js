@@ -38,7 +38,7 @@ class Nav extends Component {
           </li>
           <li>
             <NavLink to='/profile' activeClassName='active'>
-              {this.props.authedUser}
+              Welcome, <b>{this.props.authedUser}</b>
             </NavLink>
           </li>
           <li>

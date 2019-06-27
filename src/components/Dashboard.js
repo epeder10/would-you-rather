@@ -6,26 +6,29 @@ import { Redirect } from 'react-router-dom'
 
 class Dashboard extends Component {
   state = {
-    answered: true,
-    unanswered: false
+    all: false,
+    answered: false,
+    unanswered: true
   }
 
   filterSelection = (e) => {
-    alert(e)
     if (e === 'all') {
       this.setState((state) => ({
+        all: true,
         answered: false,
         unanswered: false
       }))
     } else if (e === 'answered') {
       this.setState((state) => ({
-        answered: false,
+        all: false,
+        answered: true,
         unanswered: false
       }))
     } else {
       this.setState((state) => ({
-        answered: true,
-        unanswered: false
+        all: false,
+        answered: false,
+        unanswered: true
       }))
     }
   }
@@ -34,7 +37,7 @@ class Dashboard extends Component {
       alert("Redirect")
       return (<Redirect to='/' />)
     }
-    const { answered , unanswered } = this.state
+    const { answered , unanswered, all } = this.state
     const { user, authedUser} = this.props
     const { id, name, avatarURL, answers, userQuestions } = user
     const unansweredQuestions = this.props.questions.filter((item) => !Object.keys(answers).includes(item))
@@ -42,11 +45,11 @@ class Dashboard extends Component {
     return (
       <div>
         <div id="center">
-          <button class="btn" onClick={(e) => this.filterSelection('all', e)}> Show all</button>
-          <button class="btn" onClick={(e) => this.filterSelection('answered', e)}> Answered</button>
-          <button class="btn active" onClick={(e) => this.filterSelection('unanswered', e)}> Unanswered</button>
+          <button className={all ? 'btn active' : 'btn'} onClick={(e) => this.filterSelection('all', e)}> Show all</button>
+          <button className={answered ? 'btn active' : 'btn'} onClick={(e) => this.filterSelection('answered', e)}> Answered</button>
+          <button className={unanswered ? 'btn active' : 'btn'} onClick={(e) => this.filterSelection('unanswered', e)}> Unanswered</button>
         </div>
-        <div className= {answered ? 'hidden' : ''}>
+        <div className= {answered || all ? '' : 'hidden'}>
           <h3 className='center'>Your Answered Questions</h3>
           <ul className='dashboard-answered-list'>
           {Object.keys(answers).map((key) => (
@@ -56,7 +59,7 @@ class Dashboard extends Component {
           ))}
           </ul>
         </div>
-        <div className= {unanswered ? 'hidden' : ''}>
+        <div className= {unanswered || all? '' : 'hidden'}>
           <h3 className='center unanswered'>Your Unanswered Questions</h3>
           <ul className='dashboard-unanswered-list'>
             {unansweredQuestions.map((id) => (
