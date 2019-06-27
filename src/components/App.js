@@ -7,6 +7,8 @@ import LoadingBar from 'react-redux-loading'
 import NewTweet from './NewTweet'
 import TweetPage from './TweetPage'
 import Nav from './Nav'
+import Login from './Login'
+import Logout from './Logout'
 
 class App extends Component {
   componentDidMount() {
@@ -22,8 +24,10 @@ class App extends Component {
             {this.props.loading === true
               ? null
               : <div>
-                  <Route path='/' exact component={Dashboard} />
+                  <Route path='/' exact component={Login} />
+                  <Route path='/dashboard' component={Dashboard} />
                   <Route path='/tweet/:id' component={TweetPage} />
+                  <Route path='/logout' component={Logout} />
                   <Route path='/new' component={NewTweet} />
                 </div>}
           </div>

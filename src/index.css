@@ -28,6 +28,10 @@ a {
   position: relative;
 }
 
+.hidden { 
+  display:none; 
+}
+
 .btn:hover {
   border-color: rgba(0,0,0,.5);
   text-decoration: none;
@@ -102,6 +106,17 @@ li {
   font-weight: bold;
 }
 
+select {
+  display: block;
+  margin: 0 auto;
+}
+
+.logged-out {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+}
 /* Hacky but less typing in the video */
 .tweet-info > div > span:first-child {
   font-weight: bold;

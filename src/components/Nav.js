@@ -1,14 +1,33 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, Redirect } from 'react-router-dom'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { setAuthedUser } from '../actions/authedUser'
 
 class Nav extends Component {
+  state = {
+    logout: false,
+  }
+
+  handleLogout = () => {
+    const { dispatch } = this.props
+    dispatch(setAuthedUser(""))
+
+    this.setState(() => ({
+      logout: true
+    }))
+  }
+
   render () {
+    const { logout } = this.state
+    if (logout === true) {
+        return <Redirect to='/logout' />
+    }
     return (
       <nav>
+        {this.props.authedUser &&
         <ul className='navStart'>
           <li>
-            <NavLink to='/' exact activeClassName='active'>
+            <NavLink to='/dashboard' exact activeClassName='active'>
               Home
             </NavLink>
           </li>
@@ -23,11 +42,14 @@ class Nav extends Component {
             </NavLink>
           </li>
           <li>
-            <NavLink to='/' activeClassName='active'>
-              Logout
+            <NavLink to='/logout' activeClassName='active'>
+              <button onClick={this.handleLogout}>
+                Logout
+              </button>
             </NavLink>
           </li>
         </ul>
+        }
       </nav>
     )
   }

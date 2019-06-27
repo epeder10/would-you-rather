@@ -7,17 +7,6 @@ import TiHeartFullOutline from 'react-icons/lib/ti/heart-full-outline'
 import { Link, withRouter } from 'react-router-dom'
 
 class Question extends Component {
-  /*handleLike = (e) => {
-    e.preventDefault()
-
-    const { dispatch, question, authedUser } = this.props
-
-    dispatch(handleToggleTweet({
-      id: question.id,
-      hasLiked: question.hasLiked,
-      authedUser
-    }))
-  }*/
   toParent = (e, id) => {
     e.preventDefault()
     this.props.history.push(`/question/${id}`)
