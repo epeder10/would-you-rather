@@ -1,76 +1,96 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-//import { handleAddTweet } from '../actions/tweets'
+import { handleAddQuestion } from '../actions/questions'
 import { Redirect } from 'react-router-dom'
+import { formatQuestion } from '../utils/helpers'
 
 class NewQuestion extends Component {
   state = {
-    text: '',
+    optionA: '',
+    optionB: '',
     toHome: false,
   }
-  handleChange = (e) => {
+  handleChange = (e, option) => {
     const text = e.target.value
 
-    this.setState(() => ({
-      text
-    }))
+    if (option === 'optionA'){
+      this.setState(() => ({
+        optionA: text
+      }))
+    } else if (option === 'optionB'){
+      this.setState(() => ({
+        optionB: text
+      }))
+    }
   }
   handleSubmit = (e) => {
     e.preventDefault()
 
-    const { text } = this.state
-    const { dispatch, id } = this.props
+    const { optionA, optionB } = this.state
+    const { dispatch, id, users, authedUser } = this.props
 
-    dispatch(handleAddTweet(text, id))
+    dispatch(handleAddQuestion(optionA, optionB, users[authedUser].id))
 
     this.setState(() => ({
-      text: '',
+      optionA: '',
+      optionB: '',
       toHome: id ? false : true,
     }))
   }
   render() {
-    const { text, toHome } = this.state
+    const { optionA, optionB, toHome } = this.state
 
     if (toHome === true) {
-      return <Redirect to='/' />
+      return <Redirect to='/dashboard' />
     }
 
-    const tweetLeft = 280 - text.length
+    const { authedUser } = this.props
 
+    if (authedUser === null || authedUser === "") {
+      alert("You must login before viewing this page. Redirecting to homepage.")
+      return (<Redirect to='/' />)
+    }
     return (
       <div>
         <h3 className='center'>Compose new Question</h3>
         <form className='new-question' onSubmit={this.handleSubmit}>
           <p>Would you rather?</p>
-          <textarea
-            placeholder="Answer A"
-            value={text}
-            onChange={this.handleChange}
-            className='textarea'
-            maxLength={280}
-          />
-          <textarea
-            placeholder="Answer B"
-            value={text}
-            onChange={this.handleChange}
-            className='textarea'
-            maxLength={280}
-          />
-          {tweetLeft <= 100 && (
-            <div className='tweet-length'>
-              {tweetLeft}
-            </div>
-          )}
-          <button
-            className='btn'
-            type='submit'
-            disabled={text === ''}>
-              Submit
-          </button>
+          <div>
+            <input
+              placeholder="Option A"
+              value={optionA}
+              onChange={(e) => this.handleChange(e, 'optionA')}
+              className='textarea'
+              maxLength={280}
+            />
+          </div>
+          <div>
+            <input
+              placeholder="Option B"
+              value={optionB}
+              onChange={(e) => this.handleChange(e, 'optionB')}
+              className='textarea'
+              maxLength={280}
+            />
+          </div>
+          <div>
+            <button
+              className='btn'
+              type='submit'
+              disabled={optionA === '' || optionB === ''}>
+                Submit
+            </button>
+          </div>
         </form>
       </div>
     )
   }
 }
+function mapStateToProps ({ authedUser, users }) {
+  return {
+    authedUser: authedUser,
+    users: users
+  }
+}
 
-export default connect()(NewQuestion)
+export default connect(mapStateToProps)(NewQuestion)

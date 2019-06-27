@@ -1,5 +1,5 @@
-//import { saveLikeToggle, saveQuestion } from '../utils/api'
-//import { showLoading, hideLoading } from 'react-redux-loading'
+import { saveQuestion } from '../utils/api'
+import { showLoading, hideLoading } from 'react-redux-loading'
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
 export const TOGGLE_QUESTION = 'TOGGLE_QUESTION'
@@ -12,23 +12,20 @@ function addQuestion (question) {
   }
 }
 
-/*
-export function handleAddQuestion (text, replyingTo) {
+export function handleAddQuestion (optionA, optionB, author) {
   return (dispatch, getState) => {
-    const { authedUser } = getState()
-
     dispatch(showLoading())
 
     return saveQuestion({
-      text,
-      author: authedUser,
-      replyingTo
+      optionOneText: optionA,
+      optionTwoText: optionB,
+      author
     })
       .then((question) => dispatch(addQuestion(question)))
       .then(() => dispatch(hideLoading()))
   }
 }
-*/
+
 
 export function receiveQuestions (questions) {
   return {
