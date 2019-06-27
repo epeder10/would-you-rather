@@ -1,14 +1,29 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Question from './Question'
+import { formatQuestions } from '../utils/helpers'
 
 class Dashboard extends Component {
+  
   render() {
+    const { users, authedUser} = this.props
+    const { id, name, avatarURL, answers, userQuestions } = users
+  
     return (
       <div>
-        <h3 className='center'>Your Timeline</h3>
-        <ul className='dashboard-list'>
-          {this.props.questionIds.map((id) => (
+        <p>Hello</p>
+        <span>{authedUser}</span>
+        <h3 className='center'>Your Answered Questions</h3>
+        <ul className='dashboard-answered-list'>
+        {Object.keys(answers).map((key) => (
+          <li key={key}>
+            <Question id={key}/>
+          </li>
+        ))}
+        </ul>
+        <h3 className='center'>Your Unanswered Questions</h3>
+        <ul className='dashboard-unanswered-list'>
+          {this.props.questions.map((id) => (
             <li key={id}>
               <Question id={id}/>
             </li>
@@ -19,10 +34,12 @@ class Dashboard extends Component {
   }
 }
 
-function mapStateToProps ({ questions }) {
+function mapStateToProps ({ questions, users, authedUser }) {
   return {
-    questionIds: Object.keys(questions)
-      .sort((a,b) => questions[b].timestamp - questions[a].timestamp)
+    questions: Object.keys(questions)
+      .sort((a,b) => questions[b].timestamp - questions[a].timestamp),
+    users: users,
+    authedUser: authedUser,
   }
 }
 
