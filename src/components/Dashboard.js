@@ -33,12 +33,12 @@ class Dashboard extends Component {
     }
   }
   render() {
+    const { user, authedUser} = this.props
     if (authedUser === null || authedUser === "" || user === null) {
-      alert("Redirect")
+      alert("You must login to view the dashboard. Redirecting to homepage.")
       return (<Redirect to='/' />)
     }
     const { answered , unanswered, all } = this.state
-    const { user, authedUser} = this.props
     const { id, name, avatarURL, answers, userQuestions } = user
     const unansweredQuestions = this.props.questions.filter((item) => !Object.keys(answers).includes(item))
   

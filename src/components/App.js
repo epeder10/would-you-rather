@@ -4,11 +4,12 @@ import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
 import Dashboard from './Dashboard'
 import LoadingBar from 'react-redux-loading'
-import NewTweet from './NewTweet'
+import NewQuestion from './NewQuestion'
 import TweetPage from './TweetPage'
 import Nav from './Nav'
 import Login from './Login'
 import Logout from './Logout'
+import Leaderboard from './Leaderboard'
 
 class App extends Component {
   componentDidMount() {
@@ -26,9 +27,10 @@ class App extends Component {
               : <div>
                   <Route path='/' exact component={Login} />
                   <Route path='/dashboard' component={Dashboard} />
+                  <Route path='/leaderboard' component={Leaderboard} />
                   <Route path='/tweet/:id' component={TweetPage} />
                   <Route path='/logout' component={Logout} />
-                  <Route path='/new' component={NewTweet} />
+                  <Route path='/new' component={NewQuestion} />
                 </div>}
           </div>
         </Fragment>
