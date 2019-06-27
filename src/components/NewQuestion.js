@@ -51,7 +51,7 @@ class NewQuestion extends Component {
       return (<Redirect to='/' />)
     }
     return (
-      <div>
+      <div className='center'>
         <h3 className='center'>Compose new Question</h3>
         <form className='new-question' onSubmit={this.handleSubmit}>
           <p>Would you rather?</p>
