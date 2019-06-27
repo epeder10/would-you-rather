@@ -4,20 +4,14 @@ export function formatDate (timestamp) {
   return time.substr(0, 5) + time.slice(-2) + ' | ' + d.toLocaleDateString()
 }
 
-export function formatQuestions (questions, user, authedUser) {
-  const { id, name, avatarURL, answers, userQuestions } = user
-  var answeredQuestions = []
-  var unanserwedQuestions = []
+export function formatQuestion (question, user, authedUser) {
+  const { id, name, avatarURL } = user
 
-  questions.map((id) => (
-    answeredQuestions.append(questions[id])
-  ))
 
   return {
     name,
     id,
     avatar: avatarURL,
-    answeredQuestions: answeredQuestions,
-    userQuestions: unanserwedQuestions
+
   }
 }

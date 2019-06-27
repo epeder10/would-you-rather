@@ -23,7 +23,7 @@ class Question extends Component {
     this.props.history.push(`/question/${id}`)
   }
   render() {
-    const { question } = this.props
+    const { question, user, users, authedUser, answer } = this.props
 
     if (question === null) {
       return <p>This Tweet doesn't existd</p>
@@ -35,25 +35,34 @@ class Question extends Component {
 
     return (
       <Link to={`/question/${id}`} className='question'>
+        <img
+          src={users[author].avatarURL}
+          alt={`Avatar of ${users[author].name}`}
+          className='avatar'
+        />
         <div className='question-info'>
           <div>
-            <span>Would you Rather {author}</span>
-            <div>{formatDate(timestamp)}</div>
-            <p>A: {optionOne.text}</p>
-            <p>B: {optionTwo.text}</p>
+            {answer == 'optionOne' && <p><b>{question[answer].text}</b></p>}
+            {answer == null && <p>{question.optionOne.text}</p>}
+            {answer == 'optionTwo' && <p><b>{question[answer].text}</b></p>}
+            {answer == null && <p>{question.optionTwo.text}</p>}
           </div>
+          <span>Created by: {author} on {formatDate(timestamp)}</span>
         </div>
       </Link>
     )
   }
 }
 
-function mapStateToProps ({authedUser, users, questions}, { id }) {
+function mapStateToProps ({authedUser, users, questions}, { id, answer }) {
   const question = questions[id]
 
   return {
     authedUser,
-    question: question
+    users,
+    user: users[authedUser],
+    question: question,
+    answer: answer
   }
 }
 
