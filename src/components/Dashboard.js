@@ -34,22 +34,21 @@ class Dashboard extends Component {
   render() {
     const { user, authedUser} = this.props
     if (authedUser === null || authedUser === "" || user === null) {
-      alert("You must login to view the dashboard. Redirecting to homepage.")
-      return (<Redirect to='/' />)
+      return (<Redirect to='/error' />)
     }
     const { answered , unanswered, all } = this.state
     const { answers } = user
     const unansweredQuestions = this.props.questions.filter((item) => !Object.keys(answers).includes(item))
   
     return (
-      <div>
-        <div id="center">
+      <div className='center'>
+        <div>
           <button className={all ? 'btn active' : 'btn'} onClick={(e) => this.filterSelection('all', e)}> Show all</button>
           <button className={answered ? 'btn active' : 'btn'} onClick={(e) => this.filterSelection('answered', e)}> Answered</button>
           <button className={unanswered ? 'btn active' : 'btn'} onClick={(e) => this.filterSelection('unanswered', e)}> Unanswered</button>
         </div>
         <div className= {answered || all ? '' : 'hidden'}>
-          <h3 className='center'>Your Answered Questions</h3>
+          <h3>Your Answered Questions</h3>
           <ul className='dashboard-answered-list'>
           {Object.keys(answers).map((key) => (
             <li key={key}>
@@ -59,7 +58,7 @@ class Dashboard extends Component {
           </ul>
         </div>
         <div className= {unanswered || all? '' : 'hidden'}>
-          <h3 className='center unanswered'>Your Unanswered Questions</h3>
+          <h3 className='unanswered'>Your Unanswered Questions</h3>
           <ul className='dashboard-unanswered-list'>
             {unansweredQuestions.map((id) => (
               <li key={id}>

@@ -13,8 +13,7 @@ class Leaderboard extends Component {
     const { usersSorted, users , authedUser} = this.props
 
     if (authedUser === null || authedUser === "") {
-      alert("You must login to view the leaderboard. Redirecting to homepage.")
-      return (<Redirect to='/' />)
+      return (<Redirect to='/error' />)
     }
 
     return (

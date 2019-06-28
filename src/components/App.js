@@ -10,6 +10,7 @@ import Login from './Login'
 import Logout from './Logout'
 import Leaderboard from './Leaderboard'
 import QuestionPage from './QuestionPage'
+import Error from './Error'
 
 class App extends Component {
   componentDidMount() {
@@ -31,6 +32,7 @@ class App extends Component {
                   <Route path='/question/:id' component={QuestionPage} />
                   <Route path='/logout' component={Logout} />
                   <Route path='/add' component={NewQuestion} />
+                  <Route path='/error' component={Error} />
                 </div>}
           </div>
         </Fragment>

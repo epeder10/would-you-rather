@@ -46,7 +46,6 @@ class NewQuestion extends Component {
     const { authedUser } = this.props
 
     if (authedUser === null || authedUser === "") {
-      alert("You must login before viewing this page. Redirecting to homepage.")
       return (<Redirect to='/' />)
     }
     return (

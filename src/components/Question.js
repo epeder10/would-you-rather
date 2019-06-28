@@ -31,7 +31,9 @@ class Question extends Component {
             {answer === 'optionTwo' && <p><b>Option B: {question[answer].text}</b></p>}
             {answer == null && <p>Option B: {question.optionTwo.text}</p>}
           </div>
-          <span>Created by: {author} on {formatDate(timestamp)}</span>
+          <div>
+            <span>Created by: {author} on {formatDate(timestamp)}</span>
+          </div>
         </div>
       </Link>
     )

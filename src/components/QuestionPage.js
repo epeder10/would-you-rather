@@ -34,8 +34,7 @@ class QuestionPage extends Component {
     const { author } = question
 
     if (authedUser === null || authedUser === ''){
-      alert("You must login to view this page. Redirecting to homepage.")
-      return (<Redirect to='/' />)
+      return (<Redirect to='/error' />)
     }
     return (
       <div>
