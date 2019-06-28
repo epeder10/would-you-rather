@@ -15,9 +15,7 @@ class Question extends Component {
       return <p>This Tweet doesn't existd</p>
     }
 
-    const {
-      id, author, timestamp, optionOne, optionTwo
-    } = question
+    const { id, author, timestamp } = question
 
     return (
       <Link to={`/question/${id}`} className='question'>

@@ -1,20 +1,36 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import { handleAnswerQuestion } from '../actions/questions.js'
 
 class QuestionPage extends Component {
   state = {
-    selection: ''
+    answer: ''
   }
   handleChange = (e) => {
     const text = e.target.value
     this.setState(() => ({
-      selection: text
+      answer: text
+    }))
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+
+    const { answer } = this.state
+    const { dispatch, id, question, authedUser } = this.props
+
+    alert(authedUser)
+    dispatch(handleAnswerQuestion(authedUser, question.id, answer))
+
+    this.setState(() => ({
+      answer: '',
+      toHome: id ? false : true
     }))
   }
 
   render() {
-    const { selection } = this.state
+    const { answer } = this.state
     const { authedUser, users , question} = this.props
     const { author } = question
 
@@ -23,7 +39,7 @@ class QuestionPage extends Component {
       return (<Redirect to='/' />)
     }
     return (
-      <div className='center'>
+      <div>
         <h3 className='center'>Would you Rather</h3>
         <form className='new-question' onSubmit={this.handleSubmit}>
           <div className='question'>
@@ -44,7 +60,7 @@ class QuestionPage extends Component {
           <button
             className='btn center'
             type='submit'
-            disabled={selection === ''}>
+            disabled={answer === ''}>
               Submit
           </button>
         </form>

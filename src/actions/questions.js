@@ -1,9 +1,9 @@
-import { saveQuestion } from '../utils/api'
+import { saveQuestion, saveQuestionAnswer } from '../utils/api'
 import { showLoading, hideLoading } from 'react-redux-loading'
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
-export const TOGGLE_QUESTION = 'TOGGLE_QUESTION'
 export const ADD_QUESTION = 'ADD_QUESTION'
+export const ANSWER_QUESTION = 'ANSWER_QUESTION'
 
 function addQuestion (question) {
   return {
@@ -26,20 +26,30 @@ export function handleAddQuestion (optionA, optionB, author) {
   }
 }
 
+export function answerQuestions(authedUser, qid, answer) {
+  return {
+    type: ANSWER_QUESTION,
+    authedUser,
+    qid,
+    answer
+  }
+}
+
+export function handleAnswerQuestion (info) {
+  return (dispatch, getState) => {
+    dispatch(showLoading())
+
+    alert(authedUser)
+    return saveQuestionAnswer(info)
+      .then((info) => dispatch(answerQuestions(info)))
+      .then(() => dispatch(hideLoading()))
+  }
+}
 
 export function receiveQuestions (questions) {
   return {
     type: RECEIVE_QUESTIONS,
     questions,
-  }
-}
-
-function toggleQuestion ({ id, authedUser, hasLiked }) {
-  return {
-    type: TOGGLE_QUESTION,
-    id,
-    authedUser,
-    hasLiked
   }
 }
 

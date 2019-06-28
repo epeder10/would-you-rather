@@ -1,4 +1,4 @@
-import { RECEIVE_QUESTIONS, TOGGLE_QUESTION, ADD_QUESTION } from '../actions/questions'
+import { RECEIVE_QUESTIONS, ANSWER_QUESTION, ADD_QUESTION } from '../actions/questions'
 
 export default function questions (state = {}, action) {
   switch(action.type) {
@@ -7,7 +7,16 @@ export default function questions (state = {}, action) {
         ...state,
         ...action.questions
       }
-    case TOGGLE_QUESTION :
+    case ANSWER_QUESTION :
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id]
+        }
+      }
+    case ADD_QUESTION :
+      const { question } = action
+
       return {
         ...state,
         [action.id]: {
@@ -16,13 +25,6 @@ export default function questions (state = {}, action) {
             ? state[action.id].likes.filter((uid) => uid !== action.authedUser)
             : state[action.id].likes.concat([action.authedUser])
         }
-      }
-    case ADD_QUESTION :
-      const { question } = action
-
-      return {
-        ...state,
-        [action.question.id]: action.question,
       }
     default :
       return state
