@@ -30,7 +30,7 @@ class App extends Component {
                   <Route path='/leaderboard' component={Leaderboard} />
                   <Route path='/question/:id' component={QuestionPage} />
                   <Route path='/logout' component={Logout} />
-                  <Route path='/new' component={NewQuestion} />
+                  <Route path='/add' component={NewQuestion} />
                 </div>}
           </div>
         </Fragment>
