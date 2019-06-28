@@ -37,8 +37,8 @@ class QuestionPage extends Component {
       return (<Redirect to='/error' />)
     }
     return (
-      <div>
-        <h3 className='center'>Would you Rather</h3>
+      <div className='center'>
+        <h3>Would you Rather</h3>
         <form className='new-question' onSubmit={this.handleSubmit}>
           <div className='question'>
             <img
