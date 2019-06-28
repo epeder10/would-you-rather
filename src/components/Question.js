@@ -9,7 +9,7 @@ class Question extends Component {
     this.props.history.push(`/question/${id}`)
   }
   render() {
-    const { question, user, users, authedUser, answer } = this.props
+    const { question, users, answer } = this.props
 
     if (question === null) {
       return <p>This Tweet doesn't existd</p>
@@ -26,9 +26,9 @@ class Question extends Component {
         />
         <div className='question-info'>
           <div>
-            {answer == 'optionOne' && <p><b>Option A: {question[answer].text}</b></p>}
+            {answer === 'optionOne' && <p><b>Option A: {question[answer].text}</b></p>}
             {answer == null && <p>Option A: {question.optionOne.text}</p>}
-            {answer == 'optionTwo' && <p><b>Option B: {question[answer].text}</b></p>}
+            {answer === 'optionTwo' && <p><b>Option B: {question[answer].text}</b></p>}
             {answer == null && <p>Option B: {question.optionTwo.text}</p>}
           </div>
           <span>Created by: {author} on {formatDate(timestamp)}</span>

@@ -8,23 +8,32 @@ export default function questions (state = {}, action) {
         ...action.questions
       }
     case ANSWER_QUESTION :
+      const { authedUser, qid, answer } = action.info
+
       return {
         ...state,
-        [action.id]: {
-          ...state[action.id]
+        [authedUser]: {
+          ...[authedUser],
+          answers: {
+            ...[authedUser].answers,
+            [qid]: answer
+          }
+        },
+        [qid]: {
+          ...[qid],
+              [answer]: {
+                ...[qid][answer],
+                votes: [qid][answer].votes.concat([authedUser])
+              }
         }
       }
     case ADD_QUESTION :
       const { question } = action
 
+      // TODO: Add to user questions
       return {
         ...state,
-        [action.id]: {
-          ...state[action.id],
-          likes: action.hasLiked === true
-            ? state[action.id].likes.filter((uid) => uid !== action.authedUser)
-            : state[action.id].likes.concat([action.authedUser])
-        }
+        [question.id]: question
       }
     default :
       return state

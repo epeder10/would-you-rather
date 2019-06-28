@@ -26,12 +26,10 @@ export function handleAddQuestion (optionA, optionB, author) {
   }
 }
 
-export function answerQuestions(authedUser, qid, answer) {
+export function answerQuestions(info) {
   return {
     type: ANSWER_QUESTION,
-    authedUser,
-    qid,
-    answer
+    info,
   }
 }
 
@@ -39,9 +37,8 @@ export function handleAnswerQuestion (info) {
   return (dispatch, getState) => {
     dispatch(showLoading())
 
-    alert(authedUser)
     return saveQuestionAnswer(info)
-      .then((info) => dispatch(answerQuestions(info)))
+      .then(() => dispatch(answerQuestions(info)))
       .then(() => dispatch(hideLoading()))
   }
 }
@@ -52,18 +49,3 @@ export function receiveQuestions (questions) {
     questions,
   }
 }
-
-/*
-export function handleToggleQuestion (info) {
-  return (dispatch) => {
-    dispatch(toggleQuestion(info))
-
-    return saveLikeToggle(info)
-      .catch((e) => {
-        console.warn('Error in handleToggleQuestion: ', e)
-        dispatch(toggleQuestion(info))
-        alert('The was an error liking the question. Try again.')
-      })
-  }
-}
-*/

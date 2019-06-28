@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Question from './Question'
-import { formatQuestions } from '../utils/helpers'
 import { Redirect } from 'react-router-dom'
 
 class Leaderboard extends Component {

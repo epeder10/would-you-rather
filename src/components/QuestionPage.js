@@ -19,9 +19,8 @@ class QuestionPage extends Component {
 
     const { answer } = this.state
     const { dispatch, id, question, authedUser } = this.props
-
-    alert(authedUser)
-    dispatch(handleAnswerQuestion(authedUser, question.id, answer))
+    
+    dispatch(handleAnswerQuestion({authedUser: authedUser, qid: question.id, answer:answer}))
 
     this.setState(() => ({
       answer: '',
