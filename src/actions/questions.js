@@ -1,6 +1,6 @@
 import { saveQuestion, saveQuestionAnswer } from '../utils/api'
 import { showLoading, hideLoading } from 'react-redux-loading'
-import { updateUserAnswers } from './users';
+import { updateUserAnswers, updatedUserCreated } from './users';
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
 export const ADD_QUESTION = 'ADD_QUESTION'
@@ -23,6 +23,7 @@ export function handleAddQuestion (optionA, optionB, author) {
       author
     })
       .then((question) => dispatch(addQuestion(question)))
+      .then((question) => dispatch(updatedUserCreated(question)))
       .then(() => dispatch(hideLoading()))
   }
 }

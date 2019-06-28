@@ -27,10 +27,6 @@ export default function questions (state = {}, action) {
       return {
         ...state,
         [question.id]: question,
-        [question.author]: {
-          ...state[question.author],
-          questions: state[question.author].questions.concat([question.id])
-        }
       }
     default :
       return state
