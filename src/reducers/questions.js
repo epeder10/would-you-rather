@@ -12,18 +12,11 @@ export default function questions (state = {}, action) {
 
       return {
         ...state,
-        [authedUser]: {
-          ...[authedUser],
-          answers: {
-            ...[authedUser].answers,
-            [qid]: answer
-          }
-        },
         [qid]: {
-          ...[qid],
+          ...state[qid],
               [answer]: {
-                ...[qid][answer],
-                votes: [qid][answer].votes.concat([authedUser])
+                ...state[qid][answer],
+                votes: state[qid][answer].votes.concat([authedUser])
               }
         }
       }
@@ -33,7 +26,11 @@ export default function questions (state = {}, action) {
       // TODO: Add to user questions
       return {
         ...state,
-        [question.id]: question
+        [question.id]: question,
+        [question.author]: {
+          ...state[question.author],
+          questions: state[question.author].questions.concat([question.id])
+        }
       }
     default :
       return state

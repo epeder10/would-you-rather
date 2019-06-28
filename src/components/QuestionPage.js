@@ -18,24 +18,28 @@ class QuestionPage extends Component {
     e.preventDefault()
 
     const { answer } = this.state
-    const { dispatch, id, question, authedUser } = this.props
+    const { dispatch, question, authedUser } = this.props
     
     dispatch(handleAnswerQuestion({authedUser: authedUser, qid: question.id, answer:answer}))
 
     this.setState(() => ({
       answer: '',
-      toHome: id ? false : true
+      toHome: true
     }))
   }
 
   render() {
-    const { answer } = this.state
+    const { answer, toHome } = this.state
     const { authedUser, users , question} = this.props
     const { author } = question
 
     if (authedUser === null || authedUser === ''){
       return (<Redirect to='/error' />)
     }
+    if (toHome) {
+      return (<Redirect to='/dashboard' />)
+    }
+
     return (
       <div className='center'>
         <h3>Would you Rather</h3>
