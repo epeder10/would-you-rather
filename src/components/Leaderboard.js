@@ -18,12 +18,25 @@ class Leaderboard extends Component {
     }
 
     return (
-      <div>
-        <h3 className='center'>Leaderboard</h3>
-        <ol className='center'>
-            {usersSorted.map((user) => (
-                <li key={users[user].id}>{users[user].name} Answered {Object.keys(users[user].answers).length} questions</li>
-            ))}
+      <div className='center'>
+        <h3 >Leaderboard</h3>
+        <ol>
+          {usersSorted.map((user) => (
+            <li key={users[user].id}>
+              <div className='question'>
+                <img
+                  src={users[user].avatarURL}
+                  alt={`Avatar of ${users[user].name}`}
+                  className='avatar'
+                />
+                <h3>{users[user].name}</h3>
+                <div>
+                  <p className='right'>Answered {Object.keys(users[user].answers).length}</p>
+                  <p className='right'>Created {Object.keys(users[user].questions).length}</p>
+                </div>
+              </div>
+            </li>
+          ))}
         </ol>
       </div>
     )
