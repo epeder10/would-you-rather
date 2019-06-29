@@ -65,14 +65,14 @@ class QuestionPage extends Component {
               />
               <div className='question-info'>
                 <div>
-                  { answer === 'optionOne'? 
+                  { answer === 'optionOne' || answer !== ''? 
                     <label><b>Option A: {question.optionOne.text}</b></label>
                     :
                     <label><input type='radio' name='options' value='optionOne' onChange={this.handleChange} />Option A: {question.optionOne.text}</label> 
                   }
                 </div>
                 <div>
-                  { answer === 'optionTwo'? 
+                  { answer === 'optionTwo' || answer !== ''? 
                     <label><b>Option B: {question.optionTwo.text}</b></label>
                     :
                     <label><input type='radio' name='options' value='optionTwo' onChange={this.handleChange} />Option B: {question.optionTwo.text} </label>
