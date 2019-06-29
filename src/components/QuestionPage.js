@@ -5,7 +5,8 @@ import { handleAnswerQuestion } from '../actions/questions.js'
 
 class QuestionPage extends Component {
   state = {
-    answer: ''
+    answer: '',
+    newQuestion: true
   }
 
   componentDidMount() {
@@ -14,6 +15,7 @@ class QuestionPage extends Component {
     }
     if ( this.props.question.id in this.props.user.answers ) {
       this.setState(() => ({
+        newQuestion: false,
         answer: this.props.user.answers[this.props.question.id]
       }))
     }
@@ -41,7 +43,7 @@ class QuestionPage extends Component {
   }
 
   render() {
-    const { answer, toHome } = this.state
+    const { answer, newQuestion, toHome } = this.state
     const { authedUser, users , question} = this.props
     const user = users[authedUser]
     const { author } = question
@@ -68,17 +70,17 @@ class QuestionPage extends Component {
               />
               <div className='question-info'>
                 <div>
-                  { answer === 'optionOne' || answer !== ''? 
-                    <label><b>Option A: {question.optionOne.text}</b></label>
+                  { !newQuestion ? 
+                    <label><b>{question.optionOne.text}</b></label>
                     :
-                    <label><input type='radio' name='options' value='optionOne' onChange={this.handleChange} />Option A: {question.optionOne.text}</label> 
-                  }
-                </div>
-                <div>
-                  { answer === 'optionTwo' || answer !== ''? 
-                    <label><b>Option B: {question.optionTwo.text}</b></label>
-                    :
-                    <label><input type='radio' name='options' value='optionTwo' onChange={this.handleChange} />Option B: {question.optionTwo.text} </label>
+                    <div>
+                      <div>
+                        <label><input type='radio' name='options' value='optionOne' onChange={this.handleChange} />Option A: {question.optionOne.text}</label>
+                      </div>
+                      <div>
+                        <label><input type='radio' name='options' value='optionTwo' onChange={this.handleChange} />Option B: {question.optionTwo.text} </label>
+                      </div> 
+                    </div>
                   }
                 </div>
               </div>
