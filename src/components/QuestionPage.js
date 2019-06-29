@@ -9,7 +9,7 @@ class QuestionPage extends Component {
   }
 
   componentDidMount() {
-    if (this.props.authedUser === null || this.props.authedUser === '' || this.props.user === null){
+    if (this.props.authedUser === null || this.props.authedUser === '' || this.props.user === ''){
       return (<Redirect to='/error' />)
     }
     if ( this.props.question.id in this.props.user.answers ) {
@@ -49,6 +49,9 @@ class QuestionPage extends Component {
     const optionTwoVotes = question.optionTwo.votes.length
     const totalVotes = optionOneVotes + optionTwoVotes
 
+    if (this.props.authedUser === null || this.props.authedUser === '' || this.props.user === ''){
+      return (<Redirect to='/error' />)
+    }
     if (toHome) {
       return (<Redirect to='/dashboard' />)
     }
