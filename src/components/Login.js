@@ -20,7 +20,7 @@ class Login extends Component {
   render() {
     const { users } = this.props
     const { redirectToReferrer } = this.state
-    const { from } = this.props.location.state || { from: { pathname: '/' } }
+    const { from } = this.props.location.state || { from: { pathname: '/dashboard' } }
 
     if (redirectToReferrer === true) {
       return <Redirect to={from} />

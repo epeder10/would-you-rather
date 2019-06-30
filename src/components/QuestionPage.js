@@ -37,13 +37,14 @@ class QuestionPage extends Component {
     dispatch(handleAnswerQuestion({authedUser: authedUser, qid: question.id, answer:answer}))
 
     this.setState(() => ({
-      answer: '',
-      toHome: true
+      newQuestion: false,
+      answer: answer,
+      options: 'options'
     }))
   }
 
   render() {
-    const { answer, newQuestion, toHome } = this.state
+    const { answer, newQuestion, options } = this.state
     const { authedUser, users , question} = this.props
     const user = users[authedUser]
     const { author } = question
@@ -53,9 +54,6 @@ class QuestionPage extends Component {
 
     if (this.props.authedUser === null || this.props.authedUser === '' || this.props.user === ''){
       return (<Redirect to='/error' />)
-    }
-    if (toHome) {
-      return (<Redirect to='/dashboard' />)
     }
 
     return (
@@ -71,7 +69,14 @@ class QuestionPage extends Component {
               <div className='question-info'>
                 <div>
                   { !newQuestion ? 
-                    <label><b>{question.optionOne.text}</b></label>
+                    <div>
+                      <div>
+                        <label><input type='radio' name='options' defaultChecked={answer === 'optionOne' ? true: false} disabled />Option A: {question.optionOne.text}</label>
+                      </div>
+                      <div>
+                        <label><input type='radio' name='options' defaultChecked={answer === 'optionOne' ? true: false} disabled />Option B: {question.optionTwo.text} </label>
+                      </div> 
+                    </div>
                     :
                     <div>
                       <div>
