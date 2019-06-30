@@ -89,9 +89,9 @@ class QuestionPage extends Component {
             </div>
             { question.id in user.answers ?
               <div>
-                <p>Total votes for this option {question.optionOne.votes.length}</p>
-                <p>Total votes for this question {totalVotes}</p>
-                <p>Total percent votes for this option {(question.optionOne.votes.length / totalVotes ) * 100}%</p>
+                <p>Option one has been selected {question.optionOne.votes.length} time(s) for {(question.optionOne.votes.length / totalVotes ) * 100}% of the votes</p>
+                <p>Option two has been selected {question.optionTwo.votes.length} time(s) for {(question.optionTwo.votes.length / totalVotes ) * 100}% of the votes</p>
+                <p>This question has {totalVotes} total votes.</p>
               </div>
               :
               <button
