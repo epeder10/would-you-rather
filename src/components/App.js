@@ -10,7 +10,7 @@ import Login from './Login'
 import Logout from './Logout'
 import Leaderboard from './Leaderboard'
 import QuestionPage from './QuestionPage'
-import Error from './Error'
+import ErrorPage from './ErrorPage'
 
 const fakeAuth = {
   isAuthenticated: false,
@@ -46,7 +46,7 @@ class App extends Component {
                 <PrivateRoute path='/question/:id' component={QuestionPage} />
                 <Route path='/logout' component={Logout} />
                 <PrivateRoute path='/add' component={NewQuestion} />
-                <Route path='/error' component={Error} />
+                <Route path='/error' component={ErrorPage} />
               </div>
           </div>
         </Fragment>

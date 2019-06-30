@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class Error extends Component {
+class ErrorPage extends Component {
 
   render() {
     return (
@@ -14,4 +14,4 @@ class Error extends Component {
 }
 
 
-export default Error
+export default ErrorPage

@@ -10,14 +10,13 @@ class QuestionPage extends Component {
   }
 
   componentDidMount() {
-    if (this.props.authedUser === null || this.props.authedUser === '' || this.props.user === ''){
-      return (<Redirect to='/error' />)
-    }
-    if ( this.props.question.id in this.props.user.answers ) {
-      this.setState(() => ({
-        newQuestion: false,
-        answer: this.props.user.answers[this.props.question.id]
-      }))
+    if ( ! this.props.redirect){
+      if ( this.props.question.id in this.props.user.answers ) {
+        this.setState(() => ({
+          newQuestion: false,
+          answer: this.props.user.answers[this.props.question.id]
+        }))
+      }
     }
   }
 
@@ -38,23 +37,23 @@ class QuestionPage extends Component {
 
     this.setState(() => ({
       newQuestion: false,
-      answer: answer,
-      options: 'options'
+      answer: answer
     }))
   }
 
   render() {
-    const { answer, newQuestion, options } = this.state
+    alert(this.props.redirect)
+    if (this.props.redirect) {
+      alert("redir")
+      return <Redirect to='/error'/>
+    }
+    const { answer, newQuestion } = this.state
     const { authedUser, users , question} = this.props
     const user = users[authedUser]
     const { author } = question
     const optionOneVotes = question.optionOne.votes.length
     const optionTwoVotes = question.optionTwo.votes.length
     const totalVotes = optionOneVotes + optionTwoVotes
-
-    if (this.props.authedUser === null || this.props.authedUser === '' || this.props.user === ''){
-      return (<Redirect to='/error' />)
-    }
 
     return (
         <div className='center'>
@@ -112,13 +111,17 @@ class QuestionPage extends Component {
 
 function mapStateToProps ({ authedUser, questions, users }, props) {
   const { id } = props.match.params
-
+  var redirect = false
+  if (! Object.keys(questions).includes(id)){
+    redirect = true
+  }
   return {
     id,
     authedUser,
     users,
     user: users[authedUser],
-    question: questions[id]
+    question: questions[id],
+    redirect
   }
 }
 
