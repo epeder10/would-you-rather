@@ -42,9 +42,7 @@ class QuestionPage extends Component {
   }
 
   render() {
-    alert(this.props.redirect)
     if (this.props.redirect) {
-      alert("redir")
       return <Redirect to='/error'/>
     }
     const { answer, newQuestion } = this.state
