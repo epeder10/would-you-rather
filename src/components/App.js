@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
 import Dashboard from './Dashboard'
@@ -12,9 +12,25 @@ import Leaderboard from './Leaderboard'
 import QuestionPage from './QuestionPage'
 import Error from './Error'
 
+const fakeAuth = {
+  isAuthenticated: false,
+}
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    fakeAuth.isAuthenticated === true
+      ? <Component {...props} />
+      : <Redirect to={{
+          pathname: '/',
+          state: { from: props.location }
+        }} />
+  )} />
+)
+
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(handleInitialData())
+    fakeAuth.isAuthenticated = this.props.isAuthenticated
   }
   render() {
     return (
@@ -23,17 +39,15 @@ class App extends Component {
           <LoadingBar />
           <div className='container'>
             <Nav />
-            {this.props.loading === true
-              ? null
-              : <div>
-                  <Route path='/' exact component={Login} />
-                  <Route path='/dashboard' component={Dashboard} />
-                  <Route path='/leaderboard' component={Leaderboard} />
-                  <Route path='/question/:id' component={QuestionPage} />
-                  <Route path='/logout' component={Logout} />
-                  <Route path='/add' component={NewQuestion} />
-                  <Route path='/error' component={Error} />
-                </div>}
+            <div>
+                <Route path='/' exact component={Login} />
+                <PrivateRoute path='/dashboard' component={Dashboard} />
+                <PrivateRoute path='/leaderboard' component={Leaderboard} />
+                <PrivateRoute path='/question/:id' component={QuestionPage} />
+                <Route path='/logout' component={Logout} />
+                <PrivateRoute path='/add' component={NewQuestion} />
+                <Route path='/error' component={Error} />
+              </div>
           </div>
         </Fragment>
       </Router>
@@ -43,7 +57,7 @@ class App extends Component {
 
 function mapStateToProps ({ authedUser }) {
   return {
-    loading: authedUser === null
+    isAuthenticated: authedUser === null
   }
 }
 

@@ -7,10 +7,10 @@ class Nav extends Component {
   state = {
     logout: false,
   }
-
+  
   handleLogout = () => {
     const { dispatch } = this.props
-    dispatch(setAuthedUser(""))
+    dispatch(setAuthedUser(null))
 
     this.setState(() => ({
       logout: true
@@ -43,7 +43,7 @@ class Nav extends Component {
           </li>
           <li>
             <NavLink to='/profile' activeClassName='active'>
-              Welcome, <b>{this.props.authedUser}</b>
+              Welcome, <b>{this.props.authedUser}</b> 
             </NavLink>
           </li>
           <li>

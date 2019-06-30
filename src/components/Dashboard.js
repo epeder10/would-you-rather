@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Question from './Question'
-import { Redirect } from 'react-router-dom'
 
 class Dashboard extends Component {
   state = {
@@ -32,10 +31,8 @@ class Dashboard extends Component {
     }
   }
   render() {
-    const { user, authedUser} = this.props
-    if (authedUser === null || authedUser === "" || user === null) {
-      return (<Redirect to='/error' />)
-    }
+    const { user} = this.props
+
     const { answered , unanswered, all } = this.state
     const { answers } = user
     const unansweredQuestions = this.props.questions.filter((item) => !Object.keys(answers).includes(item))
