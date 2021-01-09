@@ -1,0 +1,8 @@
+runtime: node
+service: would-you-rather
+
+handlers:
+  - url: /static/
+    static_dir: static/.*
+  - url: /.*
+    script: auto	
