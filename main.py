@@ -24,7 +24,7 @@ def add_question(question):
     questions_json = {"questions": []}
 
     for question in questions:
-        question = json.loads(json.dumps(question))
+        question = json.loads(json.dumps(question, default=str, sort_keys=True))
         questions_json['questions'].append(question)
 
     return questions_json
@@ -38,7 +38,7 @@ def get_questions():
     questions_json = {"questions": []}
 
     for question in questions:
-        question = json.loads(json.dumps(question))
+        question = json.loads(json.dumps(question, default=str, sort_keys=True))
         questions_json['questions'].append(question)
 
     return questions_json
@@ -52,8 +52,8 @@ def get_users():
     users_json = {"users": []}
 
     for user in users:
-        user = json.loads(json.dumps(user))
-        users_json['questions'].append(user)
+        user = json.loads(json.dumps(user, default=str, sort_keys=True))
+        users_json['users'].append(user)
 
     return users_json
 
@@ -77,9 +77,9 @@ def questions():
 def users():
     """Returns a list of users added by the current Firebase user."""
 
-    questions = get_questions()
+    users = get_users()
 
-    return jsonify(questions)
+    return jsonify(users)
 
 @app.route('/answers', methods=['POST'])
 def answers():
