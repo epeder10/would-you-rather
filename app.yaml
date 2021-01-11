@@ -1,4 +1,4 @@
-runtime: nodejs14
+runtime: python39
 service: would-you-rather
 
 handlers:
