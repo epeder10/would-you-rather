@@ -19,7 +19,7 @@ def add_question(question):
     """
     Fetches all questions.
     """
-    query = client.query(kind="Questions")
+    query = client.query(kind="wyr_questions")
     questions = list(query.fetch())
     questions_json = {"questions": []}
 
@@ -33,7 +33,7 @@ def get_questions():
     """
     Fetches all questions.
     """
-    query = client.query(kind="Questions")
+    query = client.query(kind="wyr_questions")
     questions = list(query.fetch())
     questions_json = {"questions": []}
 
@@ -47,7 +47,7 @@ def get_users():
     """
     Fetches all users.
     """
-    query = client.query(kind="Users")
+    query = client.query(kind="wyr_users")
     users = list(query.fetch())
     users_json = {"users": []}
 
