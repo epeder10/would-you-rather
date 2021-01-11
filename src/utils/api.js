@@ -40,7 +40,7 @@ export async function saveQuestion(data) {
   return jsonData
 }
 
-export async function saveQuestionAnswer() {
+export async function saveQuestionAnswer(data) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
