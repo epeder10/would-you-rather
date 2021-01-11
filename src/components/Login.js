@@ -31,8 +31,8 @@ class Login extends Component {
         <h3 className='center'>Please login to answer questions.</h3>
         <select onChange={this.handleSelect}>
         <option key='default' value=''></option>
-            {Object.keys(users).map((user) => (
-                <option key={users[user].id} value={users[user].id}>{users[user].name}</option>
+            {users.map((user, index) => (
+                <option key={index} value={index}>{user.name}</option>
             ))}]
         </select>
       </div>
