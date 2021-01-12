@@ -20,7 +20,7 @@ def add_question(question):
     Creates a new question.
     """
     kind = "wyr_question"
-    name = question.id
+    name = question['id']
     question_key = client.key(kind, name)
     question_entity = datastore.Entity(key=question_key)
     question_entity = question
