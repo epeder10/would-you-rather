@@ -34,10 +34,12 @@ def get_questions():
     query = client.query(kind="wyr_questions")
     questions = list(query.fetch())
     questions = json.loads(json.dumps(questions, default=str, sort_keys=True))
-    questions_json = {}
+    questions_json = []
 
     for question in questions:
-        questions_json[question['id']] = question
+        question_json = {}
+        question_json[question['id']] = question
+        questions_json.append(question_json)
 
     return questions_json
 
@@ -48,10 +50,12 @@ def get_users():
     query = client.query(kind="wyr_users")
     users = list(query.fetch())
     users = json.loads(json.dumps(users, default=str, sort_keys=True))
-    users_json = {}
+    users_json = []
 
     for user in users:
-        users_json[user['id']] = user
+        user_json = {}
+        user_json[user['id']] = user
+        users_json.append(user_json)
 
     return users_json
 
