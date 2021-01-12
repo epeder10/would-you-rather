@@ -1,6 +1,8 @@
 import { RECEIVE_QUESTIONS, ANSWER_QUESTION, ADD_QUESTION } from '../actions/questions'
 
-export default function questions (state = {}, action) {
+const initialstate = [{"author":"johndoe","optionOne":{"text":"have horrible short term memory","votes":""},"optionTwo":{"text":"have horrible long term memory","votes":""},"timestamp":"2021-01-11 16:05:00+00:00"}];
+
+export default function questions (state = initialstate, action) {
   switch(action.type) {
     case RECEIVE_QUESTIONS :
       return {

@@ -1,26 +1,28 @@
 import { RECEIVE_USERS, UPDATE_USER_ANSWERS, UPDATE_USER_CREATED } from '../actions/users'
 
-export default function users (state = {}, action) {
-  switch(action.type) {
-    case RECEIVE_USERS :
+const initial_state = [{ "answers": ["5636645067948032"], "avatarURL": "../../images/leaf.jpg", "name": "John Doe", "questions": ["5636645067948032"] }]
+
+export default function users(state = initial_state, action) {
+  switch (action.type) {
+    case RECEIVE_USERS:
       return {
         ...state,
         ...action.users
       }
-    case UPDATE_USER_ANSWERS :
+    case UPDATE_USER_ANSWERS:
       const { authedUser, qid, answer } = action.info
 
       return {
         ...state,
         [authedUser]: {
           ...state[authedUser],
-            answers: {
-              ...state[authedUser].answers,
-              [qid]: answer
-            }
+          answers: {
+            ...state[authedUser].answers,
+            [qid]: answer
+          }
         }
       }
-    case UPDATE_USER_CREATED :
+    case UPDATE_USER_CREATED:
       const { question } = action.info
 
       return {
@@ -31,7 +33,7 @@ export default function users (state = {}, action) {
         }
       }
 
-    default :
+    default:
       return state
   }
 }

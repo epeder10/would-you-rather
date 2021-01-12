@@ -25,13 +25,14 @@ class Login extends Component {
     if (redirectToReferrer === true) {
       return <Redirect to={from} />
     }
+    console.log(this.props.users);
 
     return (
       <div>
         <h3 className='center'>Please login to answer questions.</h3>
         <select onChange={this.handleSelect}>
         <option key='default' value=''></option>
-            {users.map((user, index) => (
+            {this.props.users.map((user, index) => (
                 <option key={index} value={index}>{user.name}</option>
             ))}]
         </select>
