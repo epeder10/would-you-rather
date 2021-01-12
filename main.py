@@ -17,7 +17,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 def add_question(question):
     """
-    Fetches all questions.
+    Creates a new question.
     """
     query = client.query(kind="wyr_questions")
     questions = list(query.fetch())
@@ -38,10 +38,11 @@ def get_questions():
     questions = json.loads(json.dumps(questions, default=str, sort_keys=True))
     questions_json = {}
 
-    for question in questions:
-        questions_json[question.id] = question
+    #for question in questions:
+    #    questions_json[question.id] = question
 
-    return questions_json
+    #return questions_json
+    return questions
 
 def get_users():
     """
@@ -80,12 +81,4 @@ def users():
     users = get_users()
 
     return jsonify(users)
-
-@app.route('/answers', methods=['POST'])
-def answers():
-    """Returns a list of users added by the current Firebase user."""
-
-    questions = get_questions()
-
-    return jsonify(questions)
 
