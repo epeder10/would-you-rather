@@ -38,11 +38,10 @@ def get_questions():
     questions = json.loads(json.dumps(questions, default=str, sort_keys=True))
     questions_json = {}
 
-    #for question in questions:
-    #    questions_json[question.id] = question
+    for question in questions:
+        questions_json[question['id']] = question
 
-    #return questions_json
-    return questions
+    return questions_json
 
 def get_users():
     """
@@ -54,7 +53,7 @@ def get_users():
     users_json = {}
 
     for user in users:
-        users_json[user.id] = user
+        users_json[user['id']] = user
 
     return users_json
 
