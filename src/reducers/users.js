@@ -1,6 +1,6 @@
 import { RECEIVE_USERS, UPDATE_USER_ANSWERS, UPDATE_USER_CREATED } from '../actions/users'
 
-const initial_state = [{"johndoe":{"answers":{},"avatarURL":"../../images/leaf.jpg","id":"johndoe","name":"John Doe","questions":["5636645067948032"]}}]
+const initial_state = {"johndoe":{"answers":{},"avatarURL":"../../images/leaf.jpg","id":"johndoe","name":"John Doe","questions":["5636645067948032"]}}
 
 export default function users(state = initial_state, action) {
   switch (action.type) {

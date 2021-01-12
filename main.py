@@ -25,7 +25,7 @@ def add_question(question):
     question_entity = datastore.Entity(key=question_key)
     question_entity = question
 
-    client.put(question_entity)
+    return client.put(question_entity)
 
 def get_questions():
     """
@@ -34,12 +34,10 @@ def get_questions():
     query = client.query(kind="wyr_questions")
     questions = list(query.fetch())
     questions = json.loads(json.dumps(questions, default=str, sort_keys=True))
-    questions_json = []
+    questions_json = {}
 
     for question in questions:
-        question_json = {}
-        question_json[question['id']] = question
-        questions_json.append(question_json)
+        questions_json[question['id']] = question
 
     return questions_json
 
@@ -50,12 +48,10 @@ def get_users():
     query = client.query(kind="wyr_users")
     users = list(query.fetch())
     users = json.loads(json.dumps(users, default=str, sort_keys=True))
-    users_json = []
+    users_json = {}
 
     for user in users:
-        user_json = {}
-        user_json[user['id']] = user
-        users_json.append(user_json)
+        users_json[user['id']] = user
 
     return users_json
 
