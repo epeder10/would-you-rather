@@ -28,12 +28,15 @@ export async function getUsersApi() {
 }
 
 export async function saveQuestion(data) {
+  console.log(data);
   const question = formatQuestion(data);
+  console.log(question);
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: question
+    body: JSON.stringify(question)
   };  
+  console.log(requestOptions);
 
   const response = await fetch('/questions', requestOptions);
   const jsonData = response.json();
