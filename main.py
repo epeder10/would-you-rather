@@ -19,15 +19,13 @@ def add_question(question):
     """
     Creates a new question.
     """
-    query = client.query(kind="wyr_questions")
-    questions = list(query.fetch())
-    questions_json = {"questions": []}
+    kind = "wyr_question"
+    name = question.id
+    question_key = client.key(kind, name)
+    question_entity = datastore.Entity(key=question_key)
+    question_entity = question
 
-    for question in questions:
-        question = json.loads(json.dumps(question, default=str, sort_keys=True))
-        questions_json['questions'].append(question)
-
-    return questions_json
+    client.put(question_entity)
 
 def get_questions():
     """
