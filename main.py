@@ -41,6 +41,24 @@ def get_questions():
 
     return questions_json
 
+def update_answer(payload):
+    """
+    Add the answer to the user answer section and the questions
+    """
+    user_query = client.query(kind="wyr_users")
+    user_query = user_query.add_filter('id', '=', payload['authedUser'])
+    user = user_query.fetch()
+    user = json.loads(json.dumps(user, default=str, sort_keys=True))
+    user.answers[payload['qid']] = payload['answer']
+    client.put(user)
+
+    question_query = client.query(kind="wyr_questions")
+    question_query = question_query.add_filter('id', '=', payload['qid'])
+    question = question_query.fetch()
+    question = json.loads(json.dumps(question, default=str, sort_keys=True))
+    question[payload['answer']]['votes'].append(payload['authedUser'])
+    client.put(question)
+
 def get_users():
     """
     Fetches all users.
@@ -79,4 +97,10 @@ def users():
     users = get_users()
 
     return jsonify(users)
+
+@app.route('/answer', methods=['POST'])
+def answer():
+    """Returns a list of users added by the current Firebase user."""
+
+    update_answer(request.get_json())
 

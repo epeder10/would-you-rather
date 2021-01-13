@@ -50,7 +50,7 @@ export async function saveQuestionAnswer(data) {
     body: data
   };  
 
-  const response = await fetch('/answers', requestOptions);
+  const response = await fetch('/answer', requestOptions);
   const jsonData = response.json();
   return jsonData
 }
