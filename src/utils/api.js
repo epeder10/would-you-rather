@@ -47,7 +47,7 @@ export async function saveQuestionAnswer(data) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: data
+    body: JSON.stringify(data)
   };  
 
   const response = await fetch('/answer', requestOptions);
