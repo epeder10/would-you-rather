@@ -67,7 +67,7 @@ def questions():
         questions = get_questions()
         return jsonify(questions)
     elif request.method == 'POST':
-        question = add_question(request.form)
+        question = add_question(request.get_json())
         return jsonify(question)
 
 
