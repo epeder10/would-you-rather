@@ -45,7 +45,7 @@ export async function saveQuestion(data) {
 
 export async function saveQuestionAnswer(data) {
   const requestOptions = {
-    method: 'POST',
+    method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   };  
