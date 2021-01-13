@@ -15,5 +15,5 @@ handlers:
 - url: /static/media
   static_dir: static/media
   
-- url: .*
+- url: /.*
   script: auto

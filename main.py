@@ -19,13 +19,13 @@ def add_question(question):
     """
     Creates a new question.
     """
-    kind = "wyr_question"
+    kind = "wyr_questions"
     name = question['id']
     question_key = client.key(kind, name)
     question_entity = datastore.Entity(key=question_key)
     question_entity.update(question)
 
-    return client.put(question_entity)
+    client.put(question_entity)
 
 def get_questions():
     """
@@ -67,7 +67,8 @@ def questions():
         questions = get_questions()
         return jsonify(questions)
     elif request.method == 'POST':
-        question = add_question(request.get_json())
+        question = request.get_json()
+        add_question(request.get_json())
         return jsonify(question)
 
 
