@@ -47,15 +47,14 @@ def update_answer(payload):
     """
     user_query = client.query(kind="wyr_users")
     user_query = user_query.add_filter('id', '=', payload['authedUser'])
-    user = user_query.fetch()
+    user = list(user_query.fetch(1))
     user = json.loads(json.dumps(user[0], default=str, sort_keys=True))
-    print(user)
     user['answers'][payload['qid']] = payload['answer']
     client.put(user)
 
     question_query = client.query(kind="wyr_questions")
     question_query = question_query.add_filter('id', '=', payload['qid'])
-    question = question_query.fetch()
+    question = list(question_query.fetch(1))
     question = json.loads(json.dumps(question[0], default=str, sort_keys=True))
     print(question)
     question[payload['answer']]['votes'].append(payload['authedUser'])
