@@ -27,6 +27,18 @@ def add_question(question):
 
     client.put(question_entity)
 
+def update_user(user):
+    """
+    Updates a user.
+    """
+    kind = "wyr_users"
+    name = user['id']
+    user_key = client.key(kind, name)
+    user_entity = datastore.Entity(key=user_key)
+    user_entity.update(user)
+
+    client.put(user_entity)
+    
 def get_questions():
     """
     Fetches all questions.
@@ -50,15 +62,14 @@ def update_answer(payload):
     user = list(user_query.fetch(1))
     user = json.loads(json.dumps(user[0], default=str, sort_keys=True))
     user['answers'][payload['qid']] = payload['answer']
-    client.put(user)
+    update_user(user)
 
     question_query = client.query(kind="wyr_questions")
     question_query = question_query.add_filter('id', '=', payload['qid'])
     question = list(question_query.fetch(1))
     question = json.loads(json.dumps(question[0], default=str, sort_keys=True))
-    print(question)
     question[payload['answer']]['votes'].append(payload['authedUser'])
-    client.put(question)
+    add_question(question)
 
 def get_users():
     """
