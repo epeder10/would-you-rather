@@ -114,5 +114,8 @@ def users():
 def answer():
     """Returns a list of users added by the current Firebase user."""
 
-    update_answer(request.get_json())
+    answer = request.get_json()
+    update_answer(answer)
+
+    return answer
 
