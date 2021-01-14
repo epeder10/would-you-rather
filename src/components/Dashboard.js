@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Question from './Question'
 
+import Header from "./header/Header.js";
+import HeaderLinks from "./header/HeaderLinks.js";
+
 class Dashboard extends Component {
   state = {
     all: false,
@@ -31,35 +34,47 @@ class Dashboard extends Component {
     }
   }
   render() {
-    const { user} = this.props
+    const { user } = this.props
 
-    const { answered , unanswered, all } = this.state
+    const { answered, unanswered, all } = this.state
     const { answers } = user
     const unansweredQuestions = this.props.questions.filter((item) => !Object.keys(answers).includes(item))
-  
+
     return (
       <div className='center'>
+        <div>
+          <Header
+            brand="epeder.com"
+            links={<HeaderLinks dropdownHoverColor="info" />}
+            fixed
+            color="transparent"
+            changeColorOnScroll={{
+              height: 400,
+              color: "info"
+            }}
+          />
+        </div>
         <div>
           <button className={all ? 'btn active' : 'btn'} onClick={(e) => this.filterSelection('all', e)}> Show all</button>
           <button className={answered ? 'btn active' : 'btn'} onClick={(e) => this.filterSelection('answered', e)}> Answered</button>
           <button className={unanswered ? 'btn active' : 'btn'} onClick={(e) => this.filterSelection('unanswered', e)}> Unanswered</button>
         </div>
-        <div className= {answered || all ? '' : 'hidden'}>
+        <div className={answered || all ? '' : 'hidden'}>
           <h3>Your Answered Questions</h3>
           <ul className='dashboard-answered-list'>
-          {Object.keys(answers).map((key) => (
-            <li key={key}>
-              <Question id={key} answer={answers[key]}/>
-            </li>
-          ))}
+            {Object.keys(answers).map((key) => (
+              <li key={key}>
+                <Question id={key} answer={answers[key]} />
+              </li>
+            ))}
           </ul>
         </div>
-        <div className= {unanswered || all? '' : 'hidden'}>
+        <div className={unanswered || all ? '' : 'hidden'}>
           <h3 className='unanswered'>Your Unanswered Questions</h3>
           <ul className='dashboard-unanswered-list'>
             {unansweredQuestions.map((id) => (
               <li key={id}>
-                <Question id={id}/>
+                <Question id={id} />
               </li>
             ))}
           </ul>
@@ -69,10 +84,10 @@ class Dashboard extends Component {
   }
 }
 
-function mapStateToProps ({ questions, users, authedUser }) {
+function mapStateToProps({ questions, users, authedUser }) {
   return {
     questions: Object.keys(questions)
-      .sort((a,b) => questions[b].timestamp - questions[a].timestamp),
+      .sort((a, b) => questions[b].timestamp - questions[a].timestamp),
     user: users[authedUser],
     authedUser: authedUser,
   }
