@@ -13,15 +13,11 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 
 // @material-ui/icons
-import Apps from "@material-ui/icons/Apps";
-import ViewDay from "@material-ui/icons/ViewDay";
-import Dns from "@material-ui/icons/Dns";
 import DvrIcon from '@material-ui/icons/Dvr';
-import Layers from "@material-ui/icons/Layers";
-import Error from "@material-ui/icons/Error";
-
-// core components
-import CustomDropdown from "components/CustomDropdown/CustomDropdown.js";
+import HomeIcon from '@material-ui/icons/Home';
+import AddIcon from '@material-ui/icons/Add';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import styles from "assets/jss/material-kit-pro-react/components/headerLinksStyle.js";
 import { getJSDocEnumTag } from "typescript";
@@ -71,60 +67,42 @@ export default function HeaderLinks(props) {
 
   const { dropdownHoverColor } = props.dropdownHoverColor;
   const classes = useStyles();
-  //const projects = useSelector((state) => state.projects)
-  //const dispatch = useDispatch();
+  //const user = useSelector((state) => state.projects)
+
 
   return (
     <List className={classes.list + " " + classes.mlAuto}>
-      <ListItem className={classes.listItem}>
-        <CustomDropdown
-          noLiPadding
-          navDropdown
-          hoverColor={dropdownHoverColor}
-          buttonText="Programming"
-          buttonProps={{
-            className: classes.navLink,
-            color: "transparent"
-          }}
-          buttonIcon={Apps}
-          dropdownList={[
+      <ListItem >
           <Link
-            to={'/programming/' + index}
+            to='/dashboard'
             className={classes.dropdownLink}
           >
-            <DvrIcon className={classes.dropdownIcons} /> Portfolio
+            <HomeIcon className={classes.dropdownIcons} /> Home
           </Link>
-          ]}
-        />
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <CustomDropdown
-          noLiPadding
-          navDropdown
-          hoverColor={dropdownHoverColor}
-          buttonText="Artwork"
-          buttonProps={{
-            className: classes.navLink,
-            color: "transparent"
-          }}
-          buttonIcon={ViewDay}
-          dropdownList={[
-            <Link
-              to="/sections#headers"
-              className={classes.dropdownLink}
-              onClick={e => smoothScroll(e, "headers")}
-            >
-              <Dns className={classes.dropdownIcons} /> 3D Artwork
-            </Link>,
-            <Link
-              to="/sections#features"
-              className={classes.dropdownLink}
-              onClick={e => smoothScroll(e, "features")}
-            >
-              <DvrIcon className={classes.dropdownIcons} /> Photography
-            </Link>
-          ]}
-        />
+          <Link
+            to='/add'
+            className={classes.dropdownLink}
+          >
+            <AddIcon className={classes.dropdownIcons} /> New Question
+          </Link>
+          <Link
+            to='/leaderboard'
+            className={classes.dropdownLink}
+          >
+            <DvrIcon className={classes.dropdownIcons} /> Leaderboard
+          </Link>
+          <Link
+            to='/profile'
+            className={classes.dropdownLink}
+          >
+            <AccountCircleIcon className={classes.dropdownIcons} /> Profile
+          </Link>
+          <Link
+            to='/logout'
+            className={classes.dropdownLink}
+          >
+            <ExitToAppIcon className={classes.dropdownIcons} /> Logout
+          </Link>
       </ListItem>
     </List>
   );

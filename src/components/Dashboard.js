@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Question from './Question'
 
-import Header from "./header/Header.js";
-import HeaderLinks from "./header/HeaderLinks.js";
-
 class Dashboard extends Component {
   state = {
     all: false,
@@ -42,18 +39,6 @@ class Dashboard extends Component {
 
     return (
       <div className='center'>
-        <div>
-          <Header
-            brand="epeder.com"
-            links={<HeaderLinks dropdownHoverColor="info" />}
-            fixed
-            color="transparent"
-            changeColorOnScroll={{
-              height: 400,
-              color: "info"
-            }}
-          />
-        </div>
         <div>
           <button className={all ? 'btn active' : 'btn'} onClick={(e) => this.filterSelection('all', e)}> Show all</button>
           <button className={answered ? 'btn active' : 'btn'} onClick={(e) => this.filterSelection('answered', e)}> Answered</button>

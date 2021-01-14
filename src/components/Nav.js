@@ -3,11 +3,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { setAuthedUser } from '../actions/authedUser'
 
+import Header from "./header/Header.js";
+import HeaderLinks from "./header/HeaderLinks.js";
+
 class Nav extends Component {
   state = {
     logout: false,
   }
-  
+
   handleLogout = () => {
     const { dispatch } = this.props
     dispatch(setAuthedUser(null))
@@ -17,50 +20,33 @@ class Nav extends Component {
     }))
   }
 
-  render () {
+  render() {
     const { logout } = this.state
     if (logout === true) {
-        return <Redirect to='/logout' />
+      return <Redirect to='/logout' />
     }
     return (
       <nav>
         {this.props.authedUser &&
-        <ul className='navStart'>
-          <li>
-            <NavLink to='/dashboard' exact activeClassName='active'>
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/add' activeClassName='active'>
-              New Question
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/leaderboard' activeClassName='active'>
-              Leaderboard
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/profile' activeClassName='active'>
-              Welcome, <b>{this.props.authedUser}</b> 
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/logout' activeClassName='active'>
-              <button onClick={this.handleLogout}>
-                Logout
-              </button>
-            </NavLink>
-          </li>
-        </ul>
+          <div>
+            <Header
+              brand="epeder.com"
+              links={<HeaderLinks dropdownHoverColor="info" />}
+              fixed
+              color="info"
+              changeColorOnScroll={{
+                height: 200,
+                color: "info"
+              }}
+            />
+          </div>
         }
       </nav>
     )
   }
 }
 
-function mapStateToProps ({ authedUser }) {
+function mapStateToProps({ authedUser }) {
   return {
     authedUser: authedUser,
   }
