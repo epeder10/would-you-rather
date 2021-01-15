@@ -1,6 +1,5 @@
 /* eslint-disable */
 import React from "react";
-import { shallowEqual, useSelector, useDispatch } from 'react-redux'
 
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
@@ -24,6 +23,95 @@ import { getJSDocEnumTag } from "typescript";
 import Header from "./Header";
 
 const useStyles = makeStyles(styles);
+
+function Login(props) {
+  const authedUser = props.authedUser;
+  if (authedUser) {
+    return (
+      <Link
+        to='/logout'
+        className={props.classes.dropdownLink}
+      >
+        <ExitToAppIcon className={props.classes.dropdownIcons} /> Logout
+      </Link>
+    )
+  }
+  return (
+    <Link
+      to='/login'
+      className={props.classes.dropdownLink}
+    >
+      <ExitToAppIcon className={props.classes.dropdownIcons} /> Login
+    </Link>
+  )
+}
+function Signup(props) {
+  const authedUser = props.authedUser;
+  if (authedUser) {
+    return (
+      <p></p>
+    )
+  }
+  return (
+    <Link
+      to='/signup'
+      className={props.classes.dropdownLink}
+    >
+      <ExitToAppIcon className={props.classes.dropdownIcons} /> Signup
+    </Link>
+  )
+}
+
+function NewQuestion(props) {
+  const authedUser = props.authedUser;
+  if (authedUser) {
+    return (
+      <Link
+        to='/add'
+        className={props.classes.dropdownLink}
+      >
+        <AddIcon className={props.classes.dropdownIcons} /> New Question
+      </Link>
+    )
+  }
+  return (
+    <p></p>
+  )
+}
+
+function Profile(props) {
+  const authedUser = props.authedUser;
+  if (authedUser) {
+    return (
+      <Link
+        to='/profile'
+        className={props.classes.dropdownLink}
+      >
+        <AccountCircleIcon className={props.classes.dropdownIcons} /> Profile
+      </Link>
+    )
+  }
+  return (
+    <p></p>
+  )
+}
+
+function Leaderboard(props) {
+  const authedUser = props.authedUser;
+  if (authedUser) {
+    return (
+      <Link
+        to='/leaderboard'
+        className={props.classes.dropdownLink}
+      >
+        <DvrIcon className={props.classes.dropdownIcons} /> Leaderboard
+      </Link>
+    )
+  }
+  return (
+    <p></p>
+  )
+}
 
 export default function HeaderLinks(props) {
   const easeInOutQuad = (t, b, c, d) => {
@@ -67,42 +155,21 @@ export default function HeaderLinks(props) {
 
   const { dropdownHoverColor } = props.dropdownHoverColor;
   const classes = useStyles();
-  //const user = useSelector((state) => state.projects)
-
 
   return (
     <List className={classes.list + " " + classes.mlAuto}>
       <ListItem >
-          <Link
-            to='/dashboard'
-            className={classes.dropdownLink}
-          >
-            <HomeIcon className={classes.dropdownIcons} /> Home
+        <Link
+          to='/'
+          className={classes.dropdownLink}
+        >
+          <HomeIcon className={classes.dropdownIcons} /> Home
           </Link>
-          <Link
-            to='/add'
-            className={classes.dropdownLink}
-          >
-            <AddIcon className={classes.dropdownIcons} /> New Question
-          </Link>
-          <Link
-            to='/leaderboard'
-            className={classes.dropdownLink}
-          >
-            <DvrIcon className={classes.dropdownIcons} /> Leaderboard
-          </Link>
-          <Link
-            to='/profile'
-            className={classes.dropdownLink}
-          >
-            <AccountCircleIcon className={classes.dropdownIcons} /> Profile
-          </Link>
-          <Link
-            to='/logout'
-            className={classes.dropdownLink}
-          >
-            <ExitToAppIcon className={classes.dropdownIcons} /> Logout
-          </Link>
+        <NewQuestion authedUser={props.authedUser} classes={classes} />
+        <Leaderboard authedUser={props.authedUser} classes={classes} />
+        <Profile authedUser={props.authedUser} classes={classes} />
+        <Login authedUser={props.authedUser} classes={classes} />
+        <Signup authedUser={props.authedUser} classes={classes} />
       </ListItem>
     </List>
   );

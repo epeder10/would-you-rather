@@ -9,10 +9,11 @@ class Question extends Component {
     this.props.history.push(`/question/${id}`)
   }
   render() {
+    console.log(this.props);
     const { question, users, answer } = this.props
 
     if (question === null) {
-      return <p>This question doesn't existd</p>
+      return <p>This question doesn't exist</p>
     }
 
     const { id, author, timestamp } = question

@@ -21,7 +21,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     fakeAuth.isAuthenticated === true
       ? <Component {...props} />
       : <Redirect to={{
-          pathname: '/',
+          pathname: '/login',
           state: { from: props.location }
         }} />
   )} />
@@ -40,8 +40,8 @@ class App extends Component {
           <div className='container'>
             <Nav />
             <div>
-                <Route path='/' exact component={Login} />
-                <PrivateRoute path='/dashboard' component={Dashboard} />
+                <Route path='/login' exact component={Login} />
+                <Route path='/' exact component={Dashboard} />
                 <PrivateRoute path='/leaderboard' component={Leaderboard} />
                 <PrivateRoute path='/question/:id' component={QuestionPage} />
                 <Route path='/logout' component={Logout} />

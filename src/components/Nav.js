@@ -27,20 +27,18 @@ class Nav extends Component {
     }
     return (
       <nav>
-        {this.props.authedUser &&
-          <div>
-            <Header
-              brand="epeder.com"
-              links={<HeaderLinks dropdownHoverColor="info" />}
-              fixed
-              color="info"
-              changeColorOnScroll={{
-                height: 200,
-                color: "info"
-              }}
-            />
-          </div>
-        }
+        <div>
+          <Header
+            brand="Would You Rather?"
+            links={<HeaderLinks dropdownHoverColor="info" authedUser={this.props.authedUser}/>}
+            fixed
+            color="info"
+            changeColorOnScroll={{
+              height: 200,
+              color: "info"
+            }}
+          />
+        </div>
       </nav>
     )
   }
