@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { setAuthedUser } from '../actions/authedUser'
 
-import Header from "./header/Header.js";
-import HeaderLinks from "./header/HeaderLinks.js";
+import Header from "./Header/Header.js";
+import HeaderLinks from "./Header/HeaderLinks.js";
 
 class Nav extends Component {
   state = {

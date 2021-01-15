@@ -1,5 +1,5 @@
 import { container, title } from "assets/jss/material-kit-pro-react.js";
-import headerLinksStyle from "assets/jss/material-kit-pro-react/components/headerLinksStyle.js";
+import headerLinksStyle from "components/Header/node_modules/assets/jss/material-kit-pro-react/components/headerLinksStyle.js.js";
 
 const navbarsStyle = theme => ({
   container,
