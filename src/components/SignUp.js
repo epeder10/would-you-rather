@@ -26,12 +26,16 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 
 import signupPageStyle from "assets/jss/material-kit-pro-react/views/signupPageStyle.js";
 
+import firebase, { auth, provider } from '../utils/firebase'
+
 import image from "assets/img/bg7.jpg";
 
 const useStyles = makeStyles(signupPageStyle);
 
 export default function SignUpPage({ ...rest }) {
   const [checked, setChecked] = React.useState([1]);
+  const [email, setEmail] = React.useState('Email');
+  const [password, setPassword] = React.useState('Password');
   const handleToggle = value => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -42,10 +46,30 @@ export default function SignUpPage({ ...rest }) {
     }
     setChecked(newChecked);
   };
+  const handleChange = (e, option) => {
+    const text = e.target.value
+
+    if (option === 'email') {
+      setEmail(text);
+    } else if (option === 'password') {
+      setPassword(text);
+    }
+  }
   React.useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
   });
+
+  const signUp = () => {
+    auth.createUserWithEmailAndPassword(email, password).then((user) => {
+      const { dispatch } = this.props
+      dispatch(setAuthedUser(email))
+
+      this.setState(() => ({
+        redirectToReferrer: true
+      }))
+    })
+  }
   const classes = useStyles();
   return (
     <div>
@@ -66,57 +90,24 @@ export default function SignUpPage({ ...rest }) {
                   <GridContainer justify="center">
                     <GridItem xs={12} sm={5} md={5}>
                       <form className={classes.form}>
-                        <CustomInput
-                          formControlProps={{
-                            fullWidth: true,
-                            className: classes.customFormControlClasses
-                          }}
-                          inputProps={{
-                            startAdornment: (
-                              <InputAdornment
-                                position="start"
-                                className={classes.inputAdornment}
-                              >
-                                <Face className={classes.inputAdornmentIcon} />
-                              </InputAdornment>
-                            ),
-                            placeholder: "Display Name..."
-                          }}
-                        />
-                        <CustomInput
-                          formControlProps={{
-                            fullWidth: true,
-                            className: classes.customFormControlClasses
-                          }}
-                          inputProps={{
-                            startAdornment: (
-                              <InputAdornment
-                                position="start"
-                                className={classes.inputAdornment}
-                              >
-                                <Email className={classes.inputAdornmentIcon} />
-                              </InputAdornment>
-                            ),
-                            placeholder: "Email..."
-                          }}
-                        />
-                        <CustomInput
-                          formControlProps={{
-                            fullWidth: true,
-                            className: classes.customFormControlClasses
-                          }}
-                          inputProps={{
-                            startAdornment: (
-                              <InputAdornment
-                                position="start"
-                                className={classes.inputAdornment}
-                              >
-                                <LockIcon className={classes.inputAdornmentIcon} />
-                              </InputAdornment>
-                            ),
-                            placeholder: "Password..."
-                          }}
-                        />
+                        <div>
+                          <input
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => handleChange(e, 'email')}
+                            className='textarea'
+                            maxLength={280}
+                          />
+                        </div>
+                        <div>
+                          <input
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => handleChange(e, 'password')}
+                            className='textarea'
+                            maxLength={280}
+                          />
+                        </div>
                         <FormControlLabel
                           classes={{
                             label: classes.label
@@ -144,7 +135,7 @@ export default function SignUpPage({ ...rest }) {
                           }
                         />
                         <div className={classes.textCenter}>
-                          <Button round color="primary">
+                          <Button round color="primary" onClick={(e) => signUp()}>
                             Get started
                           </Button>
                         </div>
