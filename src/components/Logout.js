@@ -1,6 +1,16 @@
 import React, { Component } from 'react'
+import firebase, { auth, provider } from '../utils/firebase'
 
 class Logout extends Component {
+  componentDidMount() {
+    auth.signOut()
+      .then(() => {
+        this.setState({
+          user: null
+        });
+      });
+    firebaseAuth.isAuthenticated = this.props.isAuthenticated
+  }
 
   render() {
     return (

@@ -18,11 +18,7 @@ import SignUpPage from './SignUp'
 
 const firebaseAuth = {
   isAuthenticated: false,
-  user: null
 }
-
-
-
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
@@ -38,6 +34,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(handleInitialData())
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ user: user.email });
+      } 
+    });
     firebaseAuth.isAuthenticated = this.props.isAuthenticated
   }
 
