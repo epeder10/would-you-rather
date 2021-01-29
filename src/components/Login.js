@@ -30,10 +30,12 @@ class Login extends Component {
     }
   }
   handleSubmit = (e) => {
-    const { email, password } = this.state
-    console.log(email);
+    const email = this.state.email;
+    const password = this.state.password;
+
     auth.signInWithEmailAndPassword(email, password)
       .then((result) => {
+        console.log(result);
         const user = result.user;
         const { dispatch } = this.props
         dispatch(setAuthedUser(user.email))
@@ -46,13 +48,13 @@ class Login extends Component {
       })
       .catch((error) => {
         console.log(error);
-        alert(error.message);
         this.setState({error, isError: true});
       });
   }
 
   render() {
-    const { email, password } = this.state
+    const email = this.state.email;
+    const password = this.state.password;
     const { redirectToReferrer } = this.state
     const { from } = this.props.location.state || { from: { pathname: '/' } }
 
@@ -63,7 +65,7 @@ class Login extends Component {
     return (
       <div className='center'>
         <h3 className='center'>Please login to answer questions.</h3>
-        <form className='new-question' onSubmit={this.handleSubmit}>
+        <div>
           <p>{this.state.isError ? this.state.error.message : "Login"}</p>
           <div>
             <input
@@ -88,11 +90,12 @@ class Login extends Component {
             <button
               className='btn'
               type='submit'
+              onClick={(e) => this.handleSubmit()}
               disabled={email === '' || password === ''}>
               Submit
             </button>
           </div>
-        </form>
+        </div>
       </div>
     )
   }

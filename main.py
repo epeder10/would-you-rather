@@ -27,6 +27,18 @@ def add_question(question):
 
     client.put(question_entity)
 
+def add_user(user):
+    """
+    Creates a new user.
+    """
+    kind = "wyr_users"
+    name = user['id']
+    user_key = client.key(kind, name)
+    user_entity = datastore.Entity(key=user_key)
+    user_entity.update(user)
+
+    client.put(user_entity)
+
 def update_user(user):
     """
     Updates a user.
@@ -102,13 +114,16 @@ def questions():
         return jsonify(question)
 
 
-@app.route('/users', methods=['GET'])
+@app.route('/users', methods=['GET','POST'])
 def users():
     """Returns a list of users added by the current Firebase user."""
-
-    users = get_users()
-
-    return jsonify(users)
+    if request.method == 'GET':
+        users = get_users()
+        return jsonify(users)
+    if request.method == 'POST':
+        user = request.get_json()
+        add_user(user)
+        return jsonify(user)
 
 @app.route('/answer', methods=['PUT'])
 def answer():

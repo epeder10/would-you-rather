@@ -1,5 +1,5 @@
 
-export function getInitialData () {
+export function getInitialData() {
   return Promise.all([
     getUsers(),
     getQuestions(),
@@ -13,7 +13,7 @@ export function getQuestions() {
 }
 
 export function getUsers() {
-    return getUsersApi();
+  return getUsersApi();
 }
 export async function getQuestionsApi() {
   const response = await fetch('/questions');
@@ -22,9 +22,9 @@ export async function getQuestionsApi() {
 }
 
 export async function getUsersApi() {
-    const response = await fetch('/users');
-    const jsonData = response.json();
-    return jsonData
+  const response = await fetch('/users');
+  const jsonData = response.json();
+  return jsonData
 }
 
 export async function saveQuestion(data) {
@@ -35,10 +35,24 @@ export async function saveQuestion(data) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(question)
-  };  
+  };
   console.log(requestOptions);
 
   const response = await fetch('/questions', requestOptions);
+  const jsonData = response.json();
+  return jsonData
+}
+
+export async function addUser(data) {
+  const user = formatUser(data);
+  console.log(user);
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(user)
+  };
+
+  const response = await fetch('/users', requestOptions);
   const jsonData = response.json();
   return jsonData
 }
@@ -48,18 +62,30 @@ export async function saveQuestionAnswer(data) {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
-  };  
+  };
 
   const response = await fetch('/answer', requestOptions);
   const jsonData = response.json();
   return jsonData
 }
 
-function generateUID () {
+function generateUID() {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
-function formatQuestion ({ optionOneText, optionTwoText, author }) {
+function formatUser({email, name, displayName}) {
+  return { 
+    email: { 
+      "answers": {}, 
+      "avatarURL": "../../images/leaf.jpg", 
+      "id": displayName, 
+      "name": name, 
+      "questions": [] 
+    } 
+  }
+}
+
+function formatQuestion({ optionOneText, optionTwoText, author }) {
   return {
     id: generateUID(),
     timestamp: Date.now(),

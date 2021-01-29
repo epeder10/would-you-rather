@@ -25,6 +25,7 @@ import CardBody from "components/Card/CardBody.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 
 import signupPageStyle from "assets/jss/material-kit-pro-react/views/signupPageStyle.js";
+import { getUsers, addUser } from '../utils/api'
 
 import firebase, { auth, provider } from '../utils/firebase'
 
@@ -36,6 +37,8 @@ export default function SignUpPage({ ...rest }) {
   const [checked, setChecked] = React.useState([1]);
   const [email, setEmail] = React.useState('Email');
   const [password, setPassword] = React.useState('Password');
+  const [displayName, setDisplayName] = React.useState('DisplayName');
+  const [name, setName] = React.useState('Name');
   const handleToggle = value => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -53,6 +56,10 @@ export default function SignUpPage({ ...rest }) {
       setEmail(text);
     } else if (option === 'password') {
       setPassword(text);
+    } else if (option === 'displayName') {
+      setDisplayName(text);
+    } else if (option === 'name') {
+      setName(text);
     }
   }
   React.useEffect(() => {
@@ -63,8 +70,13 @@ export default function SignUpPage({ ...rest }) {
   const signUp = () => {
     auth.createUserWithEmailAndPassword(email, password).then((user) => {
       const { dispatch } = this.props
-      dispatch(setAuthedUser(email))
+      dispatch(setAuthedUser(email));
 
+      user = {email, name, displayName}
+      addUser(user).then( (users) => {
+        dispatch(receiveUsers(users));
+      })
+      
       this.setState(() => ({
         redirectToReferrer: true
       }))
@@ -73,124 +85,89 @@ export default function SignUpPage({ ...rest }) {
   const classes = useStyles();
   return (
     <div>
-      <div
-        className={classes.pageHeader}
-        style={{
-          backgroundImage: "url(" + image + ")",
-          backgroundSize: "cover",
-          backgroundPosition: "top center"
-        }}
-      >
-        <div className={classes.container}>
-          <GridContainer justify="center">
-            <GridItem xs={12} sm={10} md={10}>
-              <Card className={classes.cardSignup}>
-                <h2 className={classes.cardTitle}>Register</h2>
-                <CardBody>
-                  <GridContainer justify="center">
-                    <GridItem xs={12} sm={5} md={5}>
-                      <form className={classes.form}>
-                        <div>
-                          <input
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => handleChange(e, 'email')}
-                            className='textarea'
-                            maxLength={280}
-                          />
-                        </div>
-                        <div>
-                          <input
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => handleChange(e, 'password')}
-                            className='textarea'
-                            maxLength={280}
-                          />
-                        </div>
-                        <FormControlLabel
-                          classes={{
-                            label: classes.label
-                          }}
-                          control={
-                            <Checkbox
-                              tabIndex={-1}
-                              onClick={() => handleToggle(1)}
-                              checkedIcon={
-                                <Check className={classes.checkedIcon} />
-                              }
-                              icon={<Check className={classes.uncheckedIcon} />}
-                              classes={{
-                                checked: classes.checked,
-                                root: classes.checkRoot
-                              }}
-                              checked={checked.indexOf(1) !== -1 ? true : false}
-                            />
-                          }
-                          label={
-                            <span>
-                              I agree to the{" "}
-                              <a href="#pablo">terms and conditions</a>.
-                            </span>
-                          }
+      <div className={classes.container}>
+        <GridContainer justify="center">
+          <GridItem xs={12} sm={10} md={10}>
+            <Card className={classes.cardSignup}>
+              <h2 className={classes.cardTitle}>Register</h2>
+              <CardBody>
+                <GridContainer justify="center">
+                  <GridItem xs={12} sm={5} md={5}>
+                    <form className={classes.form}>
+                      <div>
+                        <input
+                          placeholder="Email"
+                          value={email}
+                          onChange={(e) => handleChange(e, 'email')}
+                          className='textarea'
+                          maxLength={280}
                         />
-                        <div className={classes.textCenter}>
-                          <Button round color="primary" onClick={(e) => signUp()}>
-                            Get started
+                      </div>
+                      <div>
+                        <input
+                          placeholder="Name"
+                          value={name}
+                          onChange={(e) => handleChange(e, 'name')}
+                          className='textarea'
+                          maxLength={280}
+                        />
+                      </div>
+                      <div>
+                        <input
+                          placeholder="Display Name"
+                          value={displayName}
+                          onChange={(e) => handleChange(e, 'displayName')}
+                          className='textarea'
+                          maxLength={280}
+                        />
+                      </div>
+                      <div>
+                        <input
+                          placeholder="Password"
+                          value={password}
+                          onChange={(e) => handleChange(e, 'password')}
+                          className='textarea'
+                          maxLength={280}
+                        />
+                      </div>
+                      <FormControlLabel
+                        classes={{
+                          label: classes.label
+                        }}
+                        control={
+                          <Checkbox
+                            tabIndex={-1}
+                            onClick={() => handleToggle(1)}
+                            checkedIcon={
+                              <Check className={classes.checkedIcon} />
+                            }
+                            icon={<Check className={classes.uncheckedIcon} />}
+                            classes={{
+                              checked: classes.checked,
+                              root: classes.checkRoot
+                            }}
+                            checked={checked.indexOf(1) !== -1 ? true : false}
+                          />
+                        }
+                        label={
+                          <span>
+                            I agree to the{" "}
+                            <a href="#pablo">terms and conditions</a>.
+                            </span>
+                        }
+                      />
+                      <div className={classes.textCenter}>
+                        <Button round color="primary" onClick={(e) => signUp()}>
+                          Get started
                           </Button>
-                        </div>
-                      </form>
-                    </GridItem>
-                  </GridContainer>
-                </CardBody>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
-        <Footer
-          theme="transparent"
-          content={
-            <div>
-              <div className={classes.left}>
-                <a
-                  href="/"
-                  target="_blank"
-                  className={classes.footerBrand}
-                >
-                  epeder.com
-              </a>
-              </div>
-              <div className={classes.pullCenter}>
-                <List className={classes.list}>
-                  <ListItem className={classes.inlineBlock}>
-                    <a
-                      href="https://epeder.com"
-                      target="_blank"
-                      className={classes.block}
-                    >
-                      About me
-                  </a>
-                  </ListItem>
-                </List>
-              </div>
-              <div className={classes.rightLinks}>
-                <ul>
-                  <li>
-                    <Button
-                      href="https://www.linkedin.com/in/erictpedersen/"
-                      target="_blank"
-                      color="linkedin"
-                      justIcon
-                      simple
-                    >
-                      <i className="fab fa-linkedin" />
-                    </Button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          }
-        />
+                      </div>
+                    </form>
+                  </GridItem>
+                </GridContainer>
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
       </div>
     </div>
   );
